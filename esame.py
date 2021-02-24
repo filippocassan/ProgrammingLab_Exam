@@ -115,6 +115,11 @@ class CSVTimeSeriesFile():
 #Definisco la funzione 'hourly_trend_changes' 
 def hourly_trend_changes(time_series):
 
+    #Se la funzione non sta operando su una lista
+    if not isinstance(time_series, list):
+        #Alzo un'eccezione
+        raise ExamException('Non è stata inserita una lista')
+
     #Definisco una lista dove salverò le singole ore (in "epoch orari") e il corrispettivo numero di inversioni di trend di temperatura avvenute in quella precisa ora
     lista_ore_inversioni = []
 
