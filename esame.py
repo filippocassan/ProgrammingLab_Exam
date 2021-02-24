@@ -60,15 +60,8 @@ class CSVTimeSeriesFile():
                 #Prima però inserisco in posizione 2 della 'Lista' l' "epoch orario", che ricavo dividendo l'epoch per 3600 e convertendo il risultato ad intero
                 Lista[i][2] = int(Lista[i][0] / 3600)
 
-                #A questo punto devo inserire la stringa in posizione 3 della 'Lista', che in questo caso, se la temperatura precedente è minore di quella attuale,
-                if Lista[i][1] < Lista[1][1]:
-                    #sarà un '+', poichè significa che il trend è in crescita 
-                    Lista[i][3] = '+'
-
-                #se la temperatura precedente è maggiore di quella attuale
-                elif Lista[i][1] > Lista[1][1]:
-                    #inserisco in posizione 3 della 'Lista' un '-', poichè significa che il trend è in calo
-                    Lista[i][3] = '-'
+                #A prescindere alla temperatura rilevata, il valore in posizione 4 della 'Lista' è un '+', poichè considero il primo elemento il minimo valore intero
+                Lista[i][3] = '+'
                 
                 continue
 
@@ -143,10 +136,9 @@ def hourly_trend_changes(time_series):
 
             #Testo con un print() che la 'lista_ore_inversioni' si sia formata correttamente
             #print(lista_ore_inversioni[-1])
-
-    #Analizzo nuovamente tutta la 'time_series'
-    for i, line in enumerate(time_series):
         
+        #Ora passo a considerare se vi è stata un'inversione di trend
+
         #E se trovo un'inversione di trend (ovvero scopro che in posizione 4 della lista c'è un asterisco '*')
         if time_series[i][4] == '*':
 
@@ -174,17 +166,19 @@ def hourly_trend_changes(time_series):
 
 
 
-#CORPO DEL PROGRAMMA
+#############
+##AREA TEST##
+#############
 
-time_series_file = CSVTimeSeriesFile(name = 'data.csv')
-time_series = time_series_file.get_data()
+#time_series_file = CSVTimeSeriesFile(name = 'data.csv')
+#time_series = time_series_file.get_data()
 
 #Test
 #print('\nFile: {}\n'.format(time_series_file.name))
 #print('Dati del file sottoforma di lista di liste di 5 elementi(epoch, temperatura, "epoch orario", trend, inversione):\n {}\n'.format(time_series))
 
-lista_inversioni = hourly_trend_changes(time_series)
+#lista_inversioni = hourly_trend_changes(time_series)
 
-print('Lista di inversioni di trend di temperatura per ogni ora presente nel dataset:\n {}\n'.format(lista_inversioni))
+#print('Lista di inversioni di trend di temperatura per ogni ora presente nel dataset:\n {}\n'.format(lista_inversioni))
 
-print('In totale ci sono state {} inversioni'.format(sum(lista_inversioni)))
+#print('In totale ci sono state {} inversioni'.format(sum(lista_inversioni)))
